@@ -9,7 +9,7 @@ import { JobName, JobStatus, MetadataKey, QueueCleanType, QueueName } from 'src/
 import { ConfigRepository } from 'src/repositories/config.repository';
 import { EventRepository } from 'src/repositories/event.repository';
 import { LoggingRepository } from 'src/repositories/logging.repository';
-import { JobCounts, JobItem, JobOf, QueueStatus } from 'src/types';
+import { JobCounts, JobItem, JobOf } from 'src/types';
 import { getKeyByValue, getMethodNames, ImmichStartupError } from 'src/utils/misc';
 
 type JobMapItem = {
@@ -115,13 +115,14 @@ export class JobRepository {
     worker.concurrency = concurrency;
   }
 
-  async getQueueStatus(name: QueueName): Promise<QueueStatus> {
+  async isActive(name: QueueName): Promise<boolean> {
     const queue = this.getQueue(name);
+    const count = await queue.getActiveCount();
+    return count > 0;
+  }
 
-    return {
-      isActive: !!(await queue.getActiveCount()),
-      isPaused: await queue.isPaused(),
-    };
+  async isPaused(name: QueueName): Promise<boolean> {
+    return this.getQueue(name).isPaused();
   }
 
   pause(name: QueueName) {
@@ -192,14 +193,11 @@ export class JobRepository {
   }
 
   async waitForQueueCompletion(...queues: QueueName[]): Promise<void> {
-    let activeQueue: QueueStatus | undefined;
-    do {
-      const statuses = await Promise.all(queues.map((name) => this.getQueueStatus(name)));
-      activeQueue = statuses.find((status) => status.isActive);
-    } while (activeQueue);
-    {
-      this.logger.verbose(`Waiting for ${activeQueue} queue to stop...`);
+    let pending = await Promise.all(queues.filter((name) => this.isActive(name)));
+    while (pending.length > 0) {
+      this.logger.verbose(`Waiting for ${pending[0]} queue to stop...`);
       await setTimeout(1000);
+      pending = await Promise.all(queues.filter((name) => this.isActive(name)));
     }
   }
 

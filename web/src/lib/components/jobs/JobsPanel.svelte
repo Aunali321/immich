@@ -23,7 +23,7 @@
     mdiTagFaces,
     mdiVideo,
   } from '@mdi/js';
-  import type { Component } from 'svelte';
+  import { type Component } from 'svelte';
   import { t } from 'svelte-i18n';
   import JobTile from './JobTile.svelte';
   import StorageMigrationDescription from './StorageMigrationDescription.svelte';

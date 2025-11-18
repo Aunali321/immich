@@ -152,6 +152,9 @@ class Permission {
   static const userProfileImagePeriodRead = Permission._(r'userProfileImage.read');
   static const userProfileImagePeriodUpdate = Permission._(r'userProfileImage.update');
   static const userProfileImagePeriodDelete = Permission._(r'userProfileImage.delete');
+  static const queuePeriodRead = Permission._(r'queue.read');
+  static const queuePeriodUpdate = Permission._(r'queue.update');
+  static const queueJobPeriodDelete = Permission._(r'queueJob.delete');
   static const workflowPeriodCreate = Permission._(r'workflow.create');
   static const workflowPeriodRead = Permission._(r'workflow.read');
   static const workflowPeriodUpdate = Permission._(r'workflow.update');
@@ -294,6 +297,9 @@ class Permission {
     userProfileImagePeriodRead,
     userProfileImagePeriodUpdate,
     userProfileImagePeriodDelete,
+    queuePeriodRead,
+    queuePeriodUpdate,
+    queueJobPeriodDelete,
     workflowPeriodCreate,
     workflowPeriodRead,
     workflowPeriodUpdate,
@@ -471,6 +477,9 @@ class PermissionTypeTransformer {
         case r'userProfileImage.read': return Permission.userProfileImagePeriodRead;
         case r'userProfileImage.update': return Permission.userProfileImagePeriodUpdate;
         case r'userProfileImage.delete': return Permission.userProfileImagePeriodDelete;
+        case r'queue.read': return Permission.queuePeriodRead;
+        case r'queue.update': return Permission.queuePeriodUpdate;
+        case r'queueJob.delete': return Permission.queueJobPeriodDelete;
         case r'workflow.create': return Permission.workflowPeriodCreate;
         case r'workflow.read': return Permission.workflowPeriodRead;
         case r'workflow.update': return Permission.workflowPeriodUpdate;

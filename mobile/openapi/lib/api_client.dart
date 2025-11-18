@@ -496,16 +496,22 @@ class ApiClient {
           return QueueCommandTypeTransformer().decode(value);
         case 'QueueCommandDto':
           return QueueCommandDto.fromJson(value);
+        case 'QueueDeleteDto':
+          return QueueDeleteDto.fromJson(value);
         case 'QueueName':
           return QueueNameTypeTransformer().decode(value);
         case 'QueueResponseDto':
           return QueueResponseDto.fromJson(value);
+        case 'QueueResponseLegacyDto':
+          return QueueResponseLegacyDto.fromJson(value);
         case 'QueueStatisticsDto':
           return QueueStatisticsDto.fromJson(value);
-        case 'QueueStatusDto':
-          return QueueStatusDto.fromJson(value);
-        case 'QueuesResponseDto':
-          return QueuesResponseDto.fromJson(value);
+        case 'QueueStatusLegacyDto':
+          return QueueStatusLegacyDto.fromJson(value);
+        case 'QueueUpdateDto':
+          return QueueUpdateDto.fromJson(value);
+        case 'QueuesResponseLegacyDto':
+          return QueuesResponseLegacyDto.fromJson(value);
         case 'RandomSearchDto':
           return RandomSearchDto.fromJson(value);
         case 'RatingsResponse':
