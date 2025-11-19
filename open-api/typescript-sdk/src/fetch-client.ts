@@ -183,6 +183,10 @@ export type TagsResponse = {
     enabled: boolean;
     sidebarWeb: boolean;
 };
+export type TimelineResponse = {
+    sortBy: TimelineSortBy;
+    sortOrder: AssetOrder;
+};
 export type UserPreferencesResponseDto = {
     albums: AlbumsResponse;
     cast: CastResponse;
@@ -195,6 +199,7 @@ export type UserPreferencesResponseDto = {
     ratings: RatingsResponse;
     sharedLinks: SharedLinksResponse;
     tags: TagsResponse;
+    timeline: TimelineResponse;
 };
 export type AlbumsUpdate = {
     defaultAssetOrder?: AssetOrder;
@@ -241,6 +246,10 @@ export type TagsUpdate = {
     enabled?: boolean;
     sidebarWeb?: boolean;
 };
+export type TimelineUpdate = {
+    sortBy?: TimelineSortBy;
+    sortOrder?: AssetOrder;
+};
 export type UserPreferencesUpdateDto = {
     albums?: AlbumsUpdate;
     avatar?: AvatarUpdate;
@@ -254,6 +263,7 @@ export type UserPreferencesUpdateDto = {
     ratings?: RatingsUpdate;
     sharedLinks?: SharedLinksUpdate;
     tags?: TagsUpdate;
+    timeline?: TimelineUpdate;
 };
 export type SessionResponseDto = {
     appVersion: string | null;
@@ -4640,7 +4650,7 @@ export function tagAssets({ id, bulkIdsDto }: {
 /**
  * Get time bucket
  */
-export function getTimeBucket({ albumId, isFavorite, isTrashed, key, order, personId, slug, tagId, timeBucket, userId, visibility, withCoordinates, withPartners, withStacked }: {
+export function getTimeBucket({ albumId, isFavorite, isTrashed, key, order, personId, slug, sortBy, tagId, timeBucket, userId, visibility, withCoordinates, withPartners, withStacked }: {
     albumId?: string;
     isFavorite?: boolean;
     isTrashed?: boolean;
@@ -4648,6 +4658,7 @@ export function getTimeBucket({ albumId, isFavorite, isTrashed, key, order, pers
     order?: AssetOrder;
     personId?: string;
     slug?: string;
+    sortBy?: TimelineSortBy;
     tagId?: string;
     timeBucket: string;
     userId?: string;
@@ -4667,6 +4678,7 @@ export function getTimeBucket({ albumId, isFavorite, isTrashed, key, order, pers
         order,
         personId,
         slug,
+        sortBy,
         tagId,
         timeBucket,
         userId,
@@ -4681,7 +4693,7 @@ export function getTimeBucket({ albumId, isFavorite, isTrashed, key, order, pers
 /**
  * Get time buckets
  */
-export function getTimeBuckets({ albumId, isFavorite, isTrashed, key, order, personId, slug, tagId, userId, visibility, withCoordinates, withPartners, withStacked }: {
+export function getTimeBuckets({ albumId, isFavorite, isTrashed, key, order, personId, slug, sortBy, tagId, userId, visibility, withCoordinates, withPartners, withStacked }: {
     albumId?: string;
     isFavorite?: boolean;
     isTrashed?: boolean;
@@ -4689,6 +4701,7 @@ export function getTimeBuckets({ albumId, isFavorite, isTrashed, key, order, per
     order?: AssetOrder;
     personId?: string;
     slug?: string;
+    sortBy?: TimelineSortBy;
     tagId?: string;
     userId?: string;
     visibility?: AssetVisibility;
@@ -4707,6 +4720,7 @@ export function getTimeBuckets({ albumId, isFavorite, isTrashed, key, order, per
         order,
         personId,
         slug,
+        sortBy,
         tagId,
         userId,
         visibility,
@@ -5077,6 +5091,10 @@ export enum UserStatus {
 export enum AssetOrder {
     Asc = "asc",
     Desc = "desc"
+}
+export enum TimelineSortBy {
+    Captured = "captured",
+    Uploaded = "uploaded"
 }
 export enum AssetVisibility {
     Archive = "archive",
