@@ -78,8 +78,8 @@
   </ModalBody>
   <ModalFooter>
     <HStack>
-      <Button fullwidth color="secondary" on:click={() => onClose()}>{$t('cancel')}</Button>
-      <Button fullwidth on:click={handleSave}>{$t('save')}</Button>
+      <Button fullwidth color="secondary" onclick={() => onClose()}>{$t('cancel')}</Button>
+      <Button fullwidth onclick={handleSave}>{$t('save')}</Button>
     </HStack>
   </ModalFooter>
 </Modal>
