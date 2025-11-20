@@ -44,7 +44,13 @@
 
   let { isViewing: showAssetViewer } = assetViewingStore;
   let timelineManager = $state<TimelineManager>() as TimelineManager;
-  const options = { visibility: AssetVisibility.Timeline, withStacked: true, withPartners: true };
+  const options = $derived({
+    visibility: AssetVisibility.Timeline,
+    withStacked: true,
+    withPartners: true,
+    sortBy: $preferences.timeline.sortBy,
+    order: $preferences.timeline.sortOrder,
+  });
 
   const assetInteraction = new AssetInteraction();
 
@@ -85,10 +91,7 @@
   };
 
   const handleSort = async () => {
-    const result = await modalManager.show(TimelineSortModal);
-    if (result && timelineManager) {
-      await timelineManager.updateOptions(options);
-    }
+    await modalManager.show(TimelineSortModal);
   };
 
   beforeNavigate(() => {
