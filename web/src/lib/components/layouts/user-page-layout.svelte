@@ -19,6 +19,7 @@
     header?: Snippet;
     sidebar?: Snippet;
     buttons?: Snippet;
+    navbarButtons?: Snippet;
     children?: Snippet;
   }
 
@@ -32,6 +33,7 @@
     header,
     sidebar,
     buttons,
+    navbarButtons,
     children,
   }: Props = $props();
 
@@ -41,7 +43,7 @@
 
 <header>
   {#if !hideNavbar}
-    <NavigationBar {showUploadButton} onUploadClick={() => openFileUploadDialog()} />
+    <NavigationBar {showUploadButton} onUploadClick={() => openFileUploadDialog()} buttons={navbarButtons} />
   {/if}
 
   {@render header?.()}

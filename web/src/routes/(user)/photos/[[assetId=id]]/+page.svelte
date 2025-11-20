@@ -97,8 +97,16 @@
 </script>
 
 <UserPageLayout hideNavbar={assetInteraction.selectionActive} showUploadButton scrollbar={false}>
-  {#snippet buttons()}
-    <IconButton icon={mdiSort} title={$t('sort')} on:click={handleSort} />
+  {#snippet navbarButtons()}
+    <IconButton
+      color="secondary"
+      shape="round"
+      variant="ghost"
+      size="medium"
+      icon={mdiSort}
+      title={$t('sort')}
+      onclick={handleSort}
+    />
   {/snippet}
   <Timeline
     enableRouting={true}
