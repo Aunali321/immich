@@ -87,7 +87,7 @@
   const handleSort = async () => {
     const result = await modalManager.show(TimelineSortModal);
     if (result && timelineManager) {
-      await timelineManager.reset(true);
+      await timelineManager.updateOptions(options);
     }
   };
 
