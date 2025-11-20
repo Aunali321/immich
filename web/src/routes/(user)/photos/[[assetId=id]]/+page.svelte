@@ -23,6 +23,7 @@
   import Timeline from '$lib/components/timeline/Timeline.svelte';
   import { AssetAction } from '$lib/constants';
   import { TimelineManager } from '$lib/managers/timeline-manager/timeline-manager.svelte';
+  import TimelineSortModal from '$lib/modals/TimelineSortModal.svelte';
   import { AssetInteraction } from '$lib/stores/asset-interaction.svelte';
   import { assetViewingStore } from '$lib/stores/asset-viewing.store';
   import { isFaceEditMode } from '$lib/stores/face-edit.svelte';
@@ -35,14 +36,21 @@
   } from '$lib/utils/actions';
   import { openFileUploadDialog } from '$lib/utils/file-uploader';
   import { AssetVisibility } from '@immich/sdk';
+  import { IconButton, modalManager } from '@immich/ui';
 
-  import { mdiDotsVertical, mdiPlus } from '@mdi/js';
+  import { mdiDotsVertical, mdiPlus, mdiSort } from '@mdi/js';
 
   import { t } from 'svelte-i18n';
 
   let { isViewing: showAssetViewer } = assetViewingStore;
   let timelineManager = $state<TimelineManager>() as TimelineManager;
-  const options = { visibility: AssetVisibility.Timeline, withStacked: true, withPartners: true };
+  const options = $derived({
+    visibility: AssetVisibility.Timeline,
+    withStacked: true,
+    withPartners: true,
+    sortBy: $preferences.timeline.sortBy,
+    order: $preferences.timeline.sortOrder,
+  });
 
   const assetInteraction = new AssetInteraction();
 
@@ -82,12 +90,27 @@
     assetInteraction.clearMultiselect();
   };
 
+  const handleSort = async () => {
+    await modalManager.show(TimelineSortModal);
+  };
+
   beforeNavigate(() => {
     isFaceEditMode.value = false;
   });
 </script>
 
 <UserPageLayout hideNavbar={assetInteraction.selectionActive} showUploadButton scrollbar={false}>
+  {#snippet navbarButtons()}
+    <IconButton
+      color="secondary"
+      shape="round"
+      variant="ghost"
+      size="medium"
+      icon={mdiSort}
+      title={$t('sort')}
+      onclick={handleSort}
+    />
+  {/snippet}
   <Timeline
     enableRouting={true}
     bind:timelineManager

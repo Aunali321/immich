@@ -29,9 +29,10 @@
     onUploadClick?: () => void;
     // TODO: remove once this is only used in <AppShellHeader>
     noBorder?: boolean;
+    buttons?: Snippet;
   }
 
-  let { showUploadButton = true, onUploadClick, noBorder = false }: Props = $props();
+  let { showUploadButton = true, onUploadClick, noBorder = false, buttons }: Props = $props();
 
   let shouldShowAccountInfoPanel = $state(false);
   let shouldShowNotificationPanel = $state(false);
@@ -124,6 +125,8 @@
             class="lg:hidden"
           />
         {/if}
+
+        {@render buttons?.()}
 
         <ThemeButton />
 

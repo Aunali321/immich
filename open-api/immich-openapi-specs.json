@@ -12346,6 +12346,15 @@
             }
           },
           {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Sort field for timeline assets (CAPTURED for file creation date, UPLOADED for upload date)",
+            "schema": {
+              "$ref": "#/components/schemas/TimelineSortBy"
+            }
+          },
+          {
             "name": "tagId",
             "required": false,
             "in": "query",
@@ -12519,6 +12528,15 @@
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "Sort field for timeline assets (CAPTURED for file creation date, UPLOADED for upload date)",
+            "schema": {
+              "$ref": "#/components/schemas/TimelineSortBy"
             }
           },
           {
@@ -22009,6 +22027,57 @@
         ],
         "type": "object"
       },
+      "TimelineResponse": {
+        "properties": {
+          "sortBy": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TimelineSortBy"
+              }
+            ],
+            "default": "captured"
+          },
+          "sortOrder": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AssetOrder"
+              }
+            ],
+            "default": "desc"
+          }
+        },
+        "required": [
+          "sortBy",
+          "sortOrder"
+        ],
+        "type": "object"
+      },
+      "TimelineSortBy": {
+        "enum": [
+          "captured",
+          "uploaded"
+        ],
+        "type": "string"
+      },
+      "TimelineUpdate": {
+        "properties": {
+          "sortBy": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TimelineSortBy"
+              }
+            ]
+          },
+          "sortOrder": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AssetOrder"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
       "ToneMapping": {
         "enum": [
           "hable",
@@ -22468,6 +22537,9 @@
           },
           "tags": {
             "$ref": "#/components/schemas/TagsResponse"
+          },
+          "timeline": {
+            "$ref": "#/components/schemas/TimelineResponse"
           }
         },
         "required": [
@@ -22481,7 +22553,8 @@
           "purchase",
           "ratings",
           "sharedLinks",
-          "tags"
+          "tags",
+          "timeline"
         ],
         "type": "object"
       },
@@ -22522,6 +22595,9 @@
           },
           "tags": {
             "$ref": "#/components/schemas/TagsUpdate"
+          },
+          "timeline": {
+            "$ref": "#/components/schemas/TimelineUpdate"
           }
         },
         "type": "object"
